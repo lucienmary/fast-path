@@ -68,7 +68,7 @@ function displayError(errorMsg) {
 }
 
 
-// Raccourci "Go!"
+// Shortcuts.
 chrome.commands.onCommand.addListener(function (command) {
     switch (command) {
         case 'go-to-the-path':
@@ -79,5 +79,13 @@ chrome.commands.onCommand.addListener(function (command) {
             break;
         default:
             console.log(`Command ${command} not found`);
+    }
+});
+
+// Display shortcuts in popup.
+chrome.commands.getAll((commands) => {   
+    for (let {name, shortcut} of commands) {
+        const KEY = document.getElementById(`key-command_${name}`);
+        KEY.innerText = shortcut;
     }
 });
