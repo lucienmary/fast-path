@@ -1,35 +1,39 @@
-// Like an e.preventDefault() for the "Go!" button.
-const redirectActive = true;
-// ------------------------------------------------
-
-const buttonGo = document.getElementById('button-go');
-const inputPath = document.getElementById('input-path');
-const inputTargetLink = document.getElementById('input-target-link');
-const errorArea = document.getElementById('errorArea');
+const DEBUG_STOP_REDIRECT = false;                                      // FALSE by default.
+const BUTTON_GO = document.getElementById('button-go');
+const INPUT_PATH = document.getElementById('input-path');
+const CHECKBOX_NEWTAB = document.getElementById('input-target-link');
+const ERROR_AREA = document.getElementById('errorArea');                // Area for error alert. (Hidden if no error)
 
 window.addEventListener("load", function () {
     saveInputPath();
-    saveinputTargetLink();
+    saveCheckboxNewTab();
+
+    INPUT_PATH.focus();
 });
 
-buttonGo.addEventListener('click', () => {
+INPUT_PATH.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        BUTTON_GO.click();
+    }
+  });
 
-    if (inputPath.value.length != 0) {
-        chrome.storage.sync.set({ "inputPath": inputPath.value });
+BUTTON_GO.addEventListener('click', () => {
+    if (INPUT_PATH.value.length != 0) {
+        chrome.storage.sync.set({ "inputPathStorage": INPUT_PATH.value });
     }else{
         displayError('Please fill in the field.');
         return;
     }
-    chrome.storage.sync.set({ "inputTargetLink": inputTargetLink.checked });
+    chrome.storage.sync.set({ "checkboxNewtabStorage": CHECKBOX_NEWTAB.checked });
     saveInputPath();
-    saveinputTargetLink();
+    saveCheckboxNewTab();
 
     chrome.tabs.query({ 'active': true, currentWindow: true }, function (tabs) {
         var currentUrl = new URL(tabs[0].url);
-        var entireUrlToUse = currentUrl.origin + inputPath.value;
+        var entireUrlToUse = currentUrl.origin + INPUT_PATH.value;
 
-        if (redirectActive == true) {
-            if (inputTargetLink.checked == true) {
+        if (DEBUG_STOP_REDIRECT == false) {
+            if (CHECKBOX_NEWTAB.checked == true) {
                 chrome.tabs.create({ url: entireUrlToUse, index: tabs[0].index });
             } else {
                 chrome.tabs.update(undefined, { url: entireUrlToUse });
@@ -39,52 +43,41 @@ buttonGo.addEventListener('click', () => {
 }, false);
 
 function saveInputPath() {
-    chrome.storage.sync.get("inputPath", function (item) {
-
-        console.log(item.inputPath);
-        if (item.inputPath) {
-            inputPath.value = item.inputPath;
+    chrome.storage.sync.get("inputPathStorage", function (item) {
+        if (item.inputPathStorage) {
+            INPUT_PATH.value = item.inputPathStorage;
         }else{
-            inputPath.value = '';
+            INPUT_PATH.value = '';
         }
     });
 }
 
-function saveinputTargetLink() {
-    chrome.storage.sync.get("inputTargetLink", function (item) {
-        inputTargetLink.checked = item.inputTargetLink;
+function saveCheckboxNewTab() {
+    chrome.storage.sync.get("checkboxNewtabStorage", function (item) {
+        CHECKBOX_NEWTAB.checked = item.checkboxNewtabStorage;
     });
 }
 
 function displayError(errorMsg) {
-    errorArea.innerHTML = errorMsg;
-    errorArea.classList.add('display');
+    ERROR_AREA.innerHTML = errorMsg;
+    ERROR_AREA.classList.add('display');
 
     setTimeout(() => {
-        errorArea.classList.remove('display')
+        ERROR_AREA.classList.remove('display')
     }, 2500);
 }
 
 
 // Raccourci "Go!"
-
 chrome.commands.onCommand.addListener(function (command) {
     switch (command) {
         case 'go-to-the-path':
-            buttonGo.click();
+            BUTTON_GO.click();
             break;
         case 'new-tab':
-            inputTargetLink.click();
+            CHECKBOX_NEWTAB.click();
             break;
         default:
             console.log(`Command ${command} not found`);
     }
 });
-
-// document.addEventListener("keydown", function (e) {
-//     if ((navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.altKey && e.code === "KeyE") {
-//         inputTargetLink.click();
-//     } else if ((navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.code === "KeyE") {
-//         buttonGo.click();
-//     }
-// });
