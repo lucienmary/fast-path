@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;1,200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/css/styles.css">
     <title>Options</title>
 </head>
 <body>
     <header>
         <h1>Options</h1>
         <div class="baseline">
-            <small>v 0.1.0</small>
+            <small>v 0.1.1</small>
             <a href="/popup.html">
                 <?xml version="1.0" encoding="UTF-8"?>
                 <svg viewBox="0 0 24 24">
@@ -24,8 +24,10 @@
         </div>
     </header>
     <main>
-        <div class="chrome-settings-page">
-            <button id="chrome-setting-btn">Go to Chrome extension settings</button>
+        <div class="line">
+            <label for="chrome-setting-btn" class="label-title">Extension settings</label>
+            <button id="chrome-settings-btn" class="main-btn main-btn-small">Extension settings page</button>
+            <button id="chrome-shortcuts-btn" class="main-btn main-btn-small">Shortcuts page</button>
         </div>
     </main>
 

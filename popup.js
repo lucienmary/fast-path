@@ -63,7 +63,7 @@ function displayError(errorMsg) {
     ERROR_AREA.classList.add('display');
 
     setTimeout(() => {
-        ERROR_AREA.classList.remove('display')
+        ERROR_AREA.classList.remove('display');
     }, 2500);
 }
 

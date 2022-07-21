@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;1,200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/css/styles.css">
     <title>Fast Admin</title>
 </head>
 
@@ -16,7 +15,7 @@
     <header>
         <h1>Fast Path</h1>
         <div class="baseline">
-            <small>v 0.1.0</small>
+            <small>v 0.1.1</small>
             <a href="/options.html">
                 <?xml version="1.0" encoding="UTF-8"?>
                 <svg enable-background="new 0 0 489.802 489.802" version="1.1" viewBox="0 0 489.8 489.8" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
@@ -26,26 +25,24 @@
         </div>
     </header>
     <main>
-        <div class="block-first-line">
-            <label for="input-path">Go to ...</label>
+        <div class="line">
+            <label for="input-path" class="label-title">Go to ...</label>
             <input id="input-path" type="text" name="input-path" placeholder="/hello-world" value="">    
         </div>
 
-        <div class="block-second-line">
-            <div class="block-second-line_el block-second-line_el-newpage">
-                <div class="labels">
-                    <label for="target-link">New tab ?</label>
-                    <label class="key-command" for="target-link">Ctrl + Alt + E</label>
-                </div>
-                <div>
-                    <input class="tgl tgl-skewed" id="input-target-link" type="checkbox" value="" checked/>
-                    <label class="tgl-btn" data-tg-off="OFF" data-tg-on="ON" for="input-target-link"></label>
-                </div>
+        <div class="line">
+            <div class="line_block line_block-newtab">
+                <label for="input-target-link" class="label-title">Open in a new tab?</label>
+                <input class="tgl tgl-flip" id="input-target-link" type="checkbox" value="" checked/>
+                <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yes!" for="input-target-link"></label>
             </div>
-            <div class="block-second-line_el block-second-line_el-go">
-                <button name="button-go" id="button-go">Go !</button>
-                <label class="key-command" for="button-go">Ctrl + E</label>
-            </div>
+
+            <label class="key-command" for="target-link">Ctrl + Alt + E</label>
+        </div>
+
+        <div class="line">
+            <button name="button-go" id="button-go" class="main-btn">Go!</button>
+            <label class="key-command" for="button-go">Ctrl + E</label>
         </div>
 
         <div id="errorArea" class="hidden"></div>

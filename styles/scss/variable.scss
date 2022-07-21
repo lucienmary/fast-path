@@ -1,0 +1,24 @@
+:root {
+        // Color ------------------------
+    --primary-color         : hsl(330, 55%, 50%);
+    --shortcut-color        : #d5d5d5;
+    --input-color           : hsl(17, 47%, 92%);
+    --input-color-dark      : hsl(17, 47%, 80%);
+    --title-color           : #492566;
+    --warning-bg            : hsla(32, 86%, 53%, 0.25);
+    --warning-color         : hsl(32, 86%, 53%);
+
+
+    // Gradient -------------------------
+    --button-gradient       : radial-gradient(100% 100% at 100% 0%, hsl(330, 61%, 85%) 0%, hsl(330, 61%, 70%) 100%);
+    --button-gradient-color : var(--primary-color);
+
+    --on-gradient           : radial-gradient(100% 100% at 100% 0%, hsl(153, 98%, 39%) 0%, hsl(153, 98%, 34%) 100%);
+    --on-gradient-color    : hsl(153, 98%, 25%);
+
+    --off-gradient           : radial-gradient(100% 100% at 100% 0%, hsl(9, 100%, 39%) 0%, hsl(9, 100%, 34%) 100%);
+    --off-gradient-color    : hsl(9, 100%, 25%);
+
+    --body-gradient       : radial-gradient(100% 100% at 100% 0%, hsl(309, 35%, 95%) 0%, hsl(309, 35%, 85%) 100%);
+    --body-gradient-color : hsl(309, 35%, 75%);
+}
