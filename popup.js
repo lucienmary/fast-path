@@ -67,10 +67,24 @@ function displayError(errorMsg) {
 
 
 // Raccourci "Go!"
-document.addEventListener("keydown", function (e) {
-    if ((navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.altKey && e.code === "KeyE") {
-        inputTargetLink.click();
-    } else if ((navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.code === "KeyE") {
-        buttonGo.click();
+
+chrome.commands.onCommand.addListener(function (command) {
+    switch (command) {
+        case 'go-to-the-path':
+            buttonGo.click();
+            break;
+        case 'new-tab':
+            inputTargetLink.click();
+            break;
+        default:
+            console.log(`Command ${command} not found`);
     }
 });
+
+// document.addEventListener("keydown", function (e) {
+//     if ((navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.altKey && e.code === "KeyE") {
+//         inputTargetLink.click();
+//     } else if ((navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey) && e.code === "KeyE") {
+//         buttonGo.click();
+//     }
+// });

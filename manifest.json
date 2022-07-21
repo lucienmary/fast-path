@@ -1,19 +1,29 @@
 {
-    "name": "Fast Path",
-    "description": "Use pre-registered path to navigate faster on a website.",
-    "version": "0.1.0",
     "manifest_version": 3,
-    "icons": { "16": "/icon16.png",
+    "name": "Fast Path",
+    "version": "0.1.0",
+    "action": {
+        "default_icon": {
+            "16": "/icon16.png",
+            "38": "/icon38.png",
+            "48": "/icon48.png",
+            "128": "/icon128.png"
+        },
+        "default_title": "Fast Path - Use pre-registered path",
+        "default_popup": "popup.html"
+    },
+    "description": "Use pre-registered path to navigate faster on a website.",
+    "author": "Lucien MARY",
+    "icons": {
+        "16": "/icon16.png",
         "38": "/icon38.png",
         "48": "/icon48.png",
-       "128": "/icon128.png" },
+        "128": "/icon128.png"
+    },
     "background": {
         "service_worker": "background.js"
     },
     "permissions": ["storage", "tabs"],
-    "action": {
-        "default_popup": "popup.html"
-    },
     "commands": {
         "_execute_action": {
             "suggested_key": {
@@ -23,6 +33,24 @@
                 "linux": "Ctrl+Shift+E"
             },
             "description" : "Start the extension"
+        },
+        "go-to-the-path": {
+            "suggested_key": {
+                "windows": "Ctrl+E",
+                "mac": "Command+E",
+                "chromeos": "Ctrl+E",
+                "linux": "Ctrl+E"
+            },
+            "description" : "Go to the path"
+        },
+        "new-tab": {
+            "suggested_key": {
+                "windows": "Ctrl+Shift+X",
+                "mac": "Command+Shift+X",
+                "chromeos": "Ctrl+Shift+X",
+                "linux": "Ctrl+Shift+X"
+            },
+            "description" : "Open in new tab"
         }
     },
     "web_accessible_resources": [
