@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "Fast Path",
-    "version": "0.1.0",
+    "name": "Fast Path - dev",
+    "version": "0.2.0",
     "action": {
         "default_icon": {
             "16": "/icon16.png",
@@ -50,7 +50,16 @@
                 "chromeos": "Ctrl+Shift+X",
                 "linux": "Ctrl+Shift+X"
             },
-            "description" : "Open in new tab"
+            "description" : "Where to display the new page ?"
+        },
+        "tabgroup": {
+            "suggested_key": {
+                "windows": "Ctrl+Shift+G",
+                "mac": "Command+Shift+G",
+                "chromeos": "Ctrl+Shift+G",
+                "linux": "Ctrl+Shift+G"
+            },
+            "description" : "Keep the tab group?"
         }
     },
     "web_accessible_resources": [

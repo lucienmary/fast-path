@@ -15,7 +15,7 @@
     <header>
         <h1>Fast Path</h1>
         <div class="baseline">
-            <small>v 0.1.1</small>
+            <small>v 0.2.0</small>
             <a href="/options.html">
                 <?xml version="1.0" encoding="UTF-8"?>
                 <svg enable-background="new 0 0 489.802 489.802" version="1.1" viewBox="0 0 489.8 489.8" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
@@ -32,17 +32,33 @@
 
         <div class="line">
             <div class="line_block line_block-newtab">
-                <label for="input-target-link" class="label-title">Open in a new tab?</label>
-                <input class="tgl tgl-flip" id="input-target-link" type="checkbox" value="" checked/>
-                <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yes!" for="input-target-link"></label>
+                <label for="input-target-link" class="label-title">Where to display it?</label>
+                <!-- <input class="tgl tgl-flip" id="input-target-link" name="input-target-link" type="checkbox" value="" checked/> -->
+                <div class="range-wrapper">
+                    <input class="range" id="input-target-link" name="input-target-link" type="range" value="0" min="0" max="2" />
+                    <span class="range-label range-label-0">Win</span>
+                    <span class="range-label range-label-1">Tab</span>
+                    <span class="range-label range-label-2">Here</span>
+                </div>
+                <!-- <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yes!" for="input-target-link"></label> -->
             </div>
 
-            <label id="key-command_go-to-the-path" class="key-command" for="target-link">Ctrl + Alt + E</label>
+            <label id="key-command_new-tab" class="key-command" for="input-target-link">No shortcut defined</label>
         </div>
 
         <div class="line">
-            <button name="button-go" id="button-go" class="main-btn">Go!</button>
-            <label id="key-command_new-tab" class="key-command" for="button-go">Ctrl + E</label>
+            <div class="line_block line_block-tabgroup">
+                <label for="input-tabgroup" class="label-title">Keep the tab group?</label>
+                <input class="tgl tgl-flip" id="input-tabgroup" name="input-tabgroup" type="checkbox" value="" checked/>
+                <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yes!" for="input-tabgroup"></label>
+            </div>
+
+            <label id="key-command_tabgroup" class="key-command" for="input-tabgroup">No shortcut defined</label>
+        </div>
+
+        <div class="line">
+            <button name="button-go" id="button-go" name="button-go" class="main-btn">Go!</button>
+            <label id="key-command_go-to-the-path" class="key-command" for="button-go">No shortcut defined</label>
         </div>
 
         <div id="errorArea" class="hidden"></div>

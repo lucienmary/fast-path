@@ -2,6 +2,7 @@ const DEBUG_STOP_REDIRECT = false;                                      // FALSE
 const BUTTON_GO = document.getElementById('button-go');
 const INPUT_PATH = document.getElementById('input-path');
 const CHECKBOX_NEWTAB = document.getElementById('input-target-link');
+const CHECKBOX_TABGROUP = document.getElementById('input-tabgroup');
 const ERROR_AREA = document.getElementById('errorArea');                // Area for error alert. (Hidden if no error)
 
 window.addEventListener("load", function () {
@@ -77,15 +78,20 @@ chrome.commands.onCommand.addListener(function (command) {
         case 'new-tab':
             CHECKBOX_NEWTAB.click();
             break;
+        case 'tabgroup':
+            CHECKBOX_TABGROUP.click();
+            break;
         default:
             console.log(`Command ${command} not found`);
     }
 });
 
 // Display shortcuts in popup.
-chrome.commands.getAll((commands) => {   
+chrome.commands.getAll((commands) => {
     for (let {name, shortcut} of commands) {
         const KEY = document.getElementById(`key-command_${name}`);
+        console.log(commands);
+        console.log(KEY);
         KEY.innerText = shortcut;
     }
 });
