@@ -5,7 +5,7 @@ const CHECKBOX_NEWTAB = document.getElementById('input-target-link');
 const CHECKBOX_TABGROUP = document.getElementById('input-tabgroup');
 const ERROR_AREA = document.getElementById('errorArea');                // Area for error alert. (Hidden if no error)
 
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
     saveInputPath();
     saveCheckboxNewTab();
 
@@ -70,7 +70,7 @@ function displayError(errorMsg) {
 
 
 // Shortcuts.
-chrome.commands.onCommand.addListener(function (command) {
+chrome.commands.onCommand.addListener((command) => {
     switch (command) {
         case 'go-to-the-path':
             BUTTON_GO.click();
@@ -90,8 +90,19 @@ chrome.commands.onCommand.addListener(function (command) {
 chrome.commands.getAll((commands) => {
     for (let {name, shortcut} of commands) {
         const KEY = document.getElementById(`key-command_${name}`);
-        console.log(commands);
-        console.log(KEY);
         KEY.innerText = shortcut;
     }
 });
+
+CHECKBOX_NEWTAB.addEventListener("click", () => {
+    if (CHECKBOX_NEWTAB.value == 0) {
+        CHECKBOX_NEWTAB.classList.remove('range-thumb-center', 'range-thumb-right');
+        CHECKBOX_NEWTAB.classList.add('range-thumb-left');
+    }else if (CHECKBOX_NEWTAB.value == 1) {
+        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-right');
+        CHECKBOX_NEWTAB.classList.add('range-thumb-center');
+    } else {
+        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-center');
+        CHECKBOX_NEWTAB.classList.add('range-thumb-right');
+    }
+})

@@ -268,32 +268,49 @@ main {
     cursor: pointer;
     user-select: none;
     -webkit-appearance: none;
-  
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
+    transition: all 0.2s ease;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 2px;
       width: 2.53em;
       height: 1.6em;
       background: var(--on-gradient);
       box-shadow: 0 -2px 3px 0 rgba(71, 0, 56, 0.12);
       border-bottom: 2px solid var(--on-gradient-color); // var(--input-color);
       border-radius: 4px;
-      margin-top: -1px;
-      transition: all 0.2s ease;
       z-index: 1;
-      position: relative;
+      transition: left 0.2s ease;
+    }
+
+    &-thumb-left:before {
+      left: 4px;
+    }
+
+    &-thumb-center:before {
+      left: calc(50% - 1.265em);
+    }
+
+    &-thumb-right:before {
+      left: calc(100% - 2.53em - 4px);
+    }
+
+    &::-webkit-slider-thumb {
+      visibility: hidden;
     }
   }
 
   .range-label {
     position: absolute;
-    top: 50%;
+    bottom: -18px;
     transform: translateY(-50%);
     font-size: 11px;
     line-height: 1;
     text-align: center;
     pointer-events: none;
     z-index: 0;
-    color: rgb(208, 208, 208);
+    color: var(--shortcut-color);
 
     &-0 {
       left: 12px;
