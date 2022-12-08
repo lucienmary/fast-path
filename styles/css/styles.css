@@ -311,4 +311,8 @@ main .line_block {
   display: block;
 }
 
+.no-transition, .no-transition:before, .no-transition:after {
+  transition: none !important;
+}
+
 /*# sourceMappingURL=styles.css.map */

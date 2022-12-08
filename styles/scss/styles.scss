@@ -346,3 +346,7 @@ main {
 .display {
   display: block;
 }
+
+.no-transition, .no-transition:before, .no-transition:after {
+  transition: none !important;
+}

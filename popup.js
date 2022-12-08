@@ -6,8 +6,9 @@ const CHECKBOX_TABGROUP = document.getElementById('input-tabgroup');
 const ERROR_AREA = document.getElementById('errorArea');                // Area for error alert. (Hidden if no error)
 
 window.addEventListener("load", () => {
-    saveInputPath();
-    saveCheckboxNewTab();
+    getInputPath();
+    getCheckboxNewTab();
+    updateRangeNewTab(true);
 
     INPUT_PATH.focus();
 });
@@ -25,17 +26,21 @@ BUTTON_GO.addEventListener('click', () => {
         displayError('Please fill in the field.');
         return;
     }
-    chrome.storage.sync.set({ "checkboxNewtabStorage": CHECKBOX_NEWTAB.checked });
-    saveInputPath();
-    saveCheckboxNewTab();
+    getInputPath();
+    getCheckboxNewTab();
 
     chrome.tabs.query({ 'active': true, currentWindow: true }, function (tabs) {
         var currentUrl = new URL(tabs[0].url);
         var entireUrlToUse = currentUrl.origin + INPUT_PATH.value;
 
         if (DEBUG_STOP_REDIRECT == false) {
-            if (CHECKBOX_NEWTAB.checked == true) {
+                console.log(CHECKBOX_NEWTAB.value);
+
+            if (CHECKBOX_NEWTAB.value == '0') {
+                chrome.windows.create({url: entireUrlToUse, type: "normal"});
+            } else if (CHECKBOX_NEWTAB.value == '1') {
                 chrome.tabs.create({ url: entireUrlToUse, index: tabs[0].index });
+
             } else {
                 chrome.tabs.update(undefined, { url: entireUrlToUse });
             }
@@ -43,7 +48,7 @@ BUTTON_GO.addEventListener('click', () => {
     });
 }, false);
 
-function saveInputPath() {
+function getInputPath() {
     chrome.storage.sync.get("inputPathStorage", function (item) {
         if (item.inputPathStorage) {
             INPUT_PATH.value = item.inputPathStorage;
@@ -53,9 +58,13 @@ function saveInputPath() {
     });
 }
 
-function saveCheckboxNewTab() {
+function getCheckboxNewTab() {
     chrome.storage.sync.get("checkboxNewtabStorage", function (item) {
-        CHECKBOX_NEWTAB.checked = item.checkboxNewtabStorage;
+        if (item.checkboxNewtabStorage) {
+            CHECKBOX_NEWTAB.value = item.checkboxNewtabStorage;
+        }else{
+            CHECKBOX_NEWTAB.value = '0';
+        }
     });
 }
 
@@ -76,7 +85,12 @@ chrome.commands.onCommand.addListener((command) => {
             BUTTON_GO.click();
             break;
         case 'new-tab':
-            CHECKBOX_NEWTAB.click();
+            if (CHECKBOX_NEWTAB.value < 2) {
+                CHECKBOX_NEWTAB.value++;
+            } else {
+                CHECKBOX_NEWTAB.value = 0;
+            }
+            updateRangeNewTab();
             break;
         case 'tabgroup':
             CHECKBOX_TABGROUP.click();
@@ -94,15 +108,22 @@ chrome.commands.getAll((commands) => {
     }
 });
 
-CHECKBOX_NEWTAB.addEventListener("click", () => {
+CHECKBOX_NEWTAB.addEventListener("click", updateRangeNewTab);
+
+function updateRangeNewTab(isLoading) {
+    chrome.storage.sync.set({"checkboxNewtabStorage": CHECKBOX_NEWTAB.value });
+    chrome.storage.local.get(function(result){console.log(result)})
+
     if (CHECKBOX_NEWTAB.value == 0) {
-        CHECKBOX_NEWTAB.classList.remove('range-thumb-center', 'range-thumb-right');
+        CHECKBOX_NEWTAB.classList.remove('range-thumb-center', 'range-thumb-right', 'no-transition');
         CHECKBOX_NEWTAB.classList.add('range-thumb-left');
     }else if (CHECKBOX_NEWTAB.value == 1) {
-        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-right');
+        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-right', 'no-transition');
         CHECKBOX_NEWTAB.classList.add('range-thumb-center');
+        if (isLoading == true) CHECKBOX_NEWTAB.classList.add('no-transition');
     } else {
-        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-center');
+        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-center', 'no-transition');
         CHECKBOX_NEWTAB.classList.add('range-thumb-right');
+        if (isLoading == true) CHECKBOX_NEWTAB.classList.add('no-transition');
     }
-})
+};
