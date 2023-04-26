@@ -254,7 +254,7 @@ main {
 .range-wrapper {
   position: relative;
 
-  .range {
+  input[type=range] {
     background-color: rgb(247, 247, 247); // var(--input-color);
     border-radius: 4px;
     box-shadow: inset 0 -2px 3px rgba(71, 0, 56, 0.12);
@@ -268,6 +268,7 @@ main {
     cursor: pointer;
     user-select: none;
     -webkit-appearance: none;
+    appearance: none;
     transition: all 0.2s ease;
 
     &:before {
@@ -284,21 +285,22 @@ main {
       transition: left 0.2s ease;
     }
 
-    &-thumb-left:before {
-      left: 4px;
-    }
-
-    &-thumb-center:before {
-      left: calc(50% - 1.265em);
-    }
-
-    &-thumb-right:before {
-      left: calc(100% - 2.53em - 4px);
-    }
-
     &::-webkit-slider-thumb {
       visibility: hidden;
     }
+  }
+
+
+  .range-thumb-left:before {
+    left: 4px;
+  }
+
+  .range-thumb-center:before {
+    left: calc(50% - 1.265em);
+  }
+
+  .range-thumb-right:before {
+    left: calc(100% - 2.53em - 4px);
   }
 
   .range-label {
@@ -349,4 +351,20 @@ main {
 
 .no-transition, .no-transition:before, .no-transition:after {
   transition: none !important;
+}
+
+.second-choice-wrapper {
+  margin-top: 2px;
+  text-align: right;
+
+  #second-choice {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--shortcut-color);
+  }
+
+  &:before {
+    content: '→ ';
+    color: var(--shortcut-color);
+  }
 }

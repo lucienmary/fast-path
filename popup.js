@@ -1,54 +1,61 @@
 $(function () {
-    const $inputUrl = $('#input-path'),
+    const $inputPath = $('#input-path'),
+        $btnSecondChoice = $('#input-target-link'),
         $inputDest = $('#input-target-link'),
         $inputGroup = $('#input-tabgroup'),
-        $btnSubmit = $('#button-go');
+        $btnSubmit = $('#button-go'),
+        $errorMsgArea = $('#errorArea');
     
     const $userChoices = {
-        url: '',
+        path: '',
         destination: 'win',
         group: false
     };
     const $appSettings = {
         lang: 'en',
         shortcut: {
-            urlKey: '',
+            pathKey: '',
             destinationKey: '',
             groupKey: '',
             btnSubmitKey: ''
         }
     };
 
-    $inputDest.on('click', (e) => {
+    function displayErrorMsg(msg) {
+        $errorMsgArea[0].innerHTML = msg;
+        $errorMsgArea.addClass('display');
+
+        setTimeout(() => {
+            $errorMsgArea.removeClass('display');
+        }, 2500);
+    }
+
+    function displayRange(e) {
         let currentValue = parseInt(e.target.value);
 
-        if (currentValue < 2) {
-            currentValue++;
+        if (currentValue == 0) {
+            $inputDest[0].className = 'range-thumb-left';
+
+        }else if (currentValue == 1) {
+            $inputDest[0].className = 'range-thumb-center';
+
+        }else {
+            $inputDest[0].className = 'range-thumb-right';
+        }
+    }
+
+    function pathApplication(e) {
+        if ($inputPath[0].value.length != 0) {
+            chrome.storage.sync.set({ "inputPath": $inputPath.value });
         } else {
-            currentValue = 0;
+            displayErrorMsg('Please specify a path above.');
+            return;
         }
 
-        $inputDest.val(currentValue);
+        // TODO : ouvrir le chemin dans le tab ou win. + groupe.
+    }
 
-
-    });
+    $inputDest.on('click', displayRange);
+    $btnSubmit.on('click', pathApplication);
 
 });
-
-function updateRangeNewTab(isLoading) {
-    chrome.storage.sync.set({"checkboxNewtabStorage": CHECKBOX_NEWTAB.value });
-    chrome.storage.local.get(function(result){console.log(result)})
-
-    if (CHECKBOX_NEWTAB.value == 0) {
-        CHECKBOX_NEWTAB.classList.remove('range-thumb-center', 'range-thumb-right', 'no-transition');
-        CHECKBOX_NEWTAB.classList.add('range-thumb-left');
-    }else if (CHECKBOX_NEWTAB.value == 1) {
-        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-right', 'no-transition');
-        CHECKBOX_NEWTAB.classList.add('range-thumb-center');
-        if (isLoading == true) CHECKBOX_NEWTAB.classList.add('no-transition');
-    } else {
-        CHECKBOX_NEWTAB.classList.remove('range-thumb-left', 'range-thumb-center', 'no-transition');
-        CHECKBOX_NEWTAB.classList.add('range-thumb-right');
-        if (isLoading == true) CHECKBOX_NEWTAB.classList.add('no-transition');
-    }
-};
